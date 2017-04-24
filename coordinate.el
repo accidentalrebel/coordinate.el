@@ -32,9 +32,12 @@
 ;;;###autoload
 (defun coordinate-initialize-view-area (cols rows &optional char)
   "Initialize an area for drawing.
+This is the first thing that should be called as initializes the draw area.
+If this is not done col and row positions might return incorrectly.
+
 COLS specify the number of columns.
 ROWS specify the number of rows.
-[optional] CHAR, the char to place."
+&optional CHAR, the char to place."
   (dotimes (row rows)
     (dotimes (_col cols)
       (insert (if char
