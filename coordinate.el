@@ -37,7 +37,7 @@ If this is not done col and row positions might return incorrectly.
 
 COLS specify the number of columns.
 ROWS specify the number of rows.
-&optional CHAR, the char to place."
+&optional CHAR is the caharter to place."
   (dotimes (row rows)
     (dotimes (_col cols)
       (insert (if char
@@ -48,28 +48,40 @@ ROWS specify the number of rows.
       (newline))
     ))
 
-(defun coordinate-place-char-at (col row char)
+(defun coordinate-place-char-at (col row char &optional attributes)
   "Place char at COL and ROW coordinates.
-CHAR can be any value.
+CHAR is the character to place.
+&optional ATTRIBUTES is the face attribute to use for the character.
 Coordinates use a starting index of 0."
   (save-excursion
     (coordinate-position-point-at col row)
-    (replace-rectangle (point) (+ (point) 1) char)))
+    (replace-rectangle (point) (+ (point) 1) (propertize char 'font-lock-face attributes))))
 
-(defun coordinate-place-string-at-area (col row str)
+(defun test-put ()
+  "Test."
+  (interactive)
+  (coordinate-initialize-view-area 5 5 "-")
+  (coordinate-place-char-at 0 0 "k" '(:foreground "red" :background "green" :height 250))
+  (coordinate-place-string-at-area 1 1 "kar
+lo" '(:foreground "yellow"))
+  )
+
+(defun coordinate-place-string-at-area (col row str &optional attributes)
   "Places at COL and ROW a given STR.
+&optional ATTRIBUTES is the face attribute to use for the string.
 Can accept a multiline string."
   (save-excursion
     (let ((lines (split-string str "[\n\r]+")))
       (dotimes (index (length lines))
 	(coordinate-position-point-at col (+ row index))
-	(replace-rectangle (point) (+ (point) (string-width (nth index lines))) (nth index lines))))))
+	(replace-rectangle (point) (+ (point) (string-width (nth index lines))) (propertize (nth index lines) 'font-lock-face attributes))))))
 
-(defun coordinate-place-char-at-area (col row width height char)
+(defun coordinate-place-char-at-area (col row width height char &optional attributes)
   "Place a character at the given COL and ROW.
-WIDTH refers to the number of columns to repeat the character.
-HEIGHT refers to the number of rows to repeat the character.
-CHAR is the character to place."
+WIDTH is the number of columns to repeat the character.
+HEIGHT is the number of rows to repeat the character.
+CHAR is the character to place.
+&optional ATTRIBUTES is the face attribute to use for the character."
   (dotimes (y height)
     (dotimes (x width)
       (coordinate-place-char-at (+ col x) (+ row y) char)
