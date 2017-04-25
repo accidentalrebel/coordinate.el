@@ -97,18 +97,7 @@ Coordinates use a starting index of 0."
   (coordinate-position-point-at col row)
   (put-text-property (point) (+ (point) 1) 'font-lock-face attributes))
 
-(defun coordinate-set-color-at (col row bg-color fg-color)
-  "Set the color at COL and ROW with BG-COLOR and FG-COLOR."
-  (coordinate-position-point-at col row)
-  (let (property-list '())
-    (when bg-color
-      (setq property-list (plist-put property-list ':background (symbol-name bg-color))))
-    (when fg-color
-      (setq property-list (plist-put property-list ':foreground (symbol-name fg-color))))
-	 
-    (put-text-property (point) (+ (point) 1) 'font-lock-face property-list)))
-
-(defun coordinate-reset-color-at (col row)
+(defun coordinate-remove-text-property-at (col row)
   "Reset the color text property at COL and ROW."
   (coordinate-position-point-at col row)
   (remove-text-properties (point) (+ (point) 1) '(font-lock-face)))
