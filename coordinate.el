@@ -57,15 +57,6 @@ Coordinates use a starting index of 0."
     (coordinate-position-point-at col row)
     (replace-rectangle (point) (+ (point) 1) (propertize char 'font-lock-face attributes))))
 
-(defun test-put ()
-  "Test."
-  (interactive)
-  (coordinate-initialize-view-area 5 5 "-")
-  (coordinate-place-char-at 0 0 "k" '(:foreground "red" :background "green" :height 250))
-  (coordinate-place-string-at-area 1 1 "kar
-lo" '(:foreground "yellow"))
-  )
-
 (defun coordinate-place-string-at-area (col row str &optional attributes)
   "Places at COL and ROW a given STR.
 &optional ATTRIBUTES is the face attribute to use for the string.
@@ -84,7 +75,7 @@ CHAR is the character to place.
 &optional ATTRIBUTES is the face attribute to use for the character."
   (dotimes (y height)
     (dotimes (x width)
-      (coordinate-place-char-at (+ col x) (+ row y) char)
+      (coordinate-place-char-at (+ col x) (+ row y) char attributes)
       )
     ))
 
@@ -121,14 +112,6 @@ Coordinates use a starting index of 0."
   "Reset the color text property at COL and ROW."
   (coordinate-position-point-at col row)
   (remove-text-properties (point) (+ (point) 1) '(font-lock-face)))
-
-(defun coordinate-set-bg-color-at (col row bg-color)
-  "Set the color at COL and ROW with just the BG-COLOR."
-  (coordinate-set-color-at col row bg-color nil))
-
-(defun coordinate-set-fg-color-at (col row fg-color)
-  "Set the color at COL and ROW with just the FG-COLOR."
-  (coordinate-set-color-at col row nil fg-color))
 
 (defun coordinate-get-color-at (col row)
   "Get the color at COL and ROW.
