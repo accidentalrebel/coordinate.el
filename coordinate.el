@@ -48,6 +48,13 @@ ROWS specify the number of rows.
       (newline))
     ))
 
+(defun coordinate-position-point-at (col row)
+  "Positions the point at COL and ROW coondinates.
+Coordinates use a starting index of 0."
+  (goto-char (point-min))
+  (forward-line row)
+  (move-to-column col))
+
 (defun coordinate-place-char-at (col row char &optional attributes)
   "Place char at COL and ROW coordinates.
 CHAR is the character to place.
@@ -85,17 +92,10 @@ Coordinates use a starting index of 0."
   (coordinate-position-point-at col row)
   (string (char-after)))
 
-(defun coordinate-position-point-at (col row)
-  "Positions the point at COL and ROW coondinates.
-Coordinates use a starting index of 0."
-  (goto-char (point-min))
-  (forward-line row)
-  (move-to-column col))
-
-(defun coordinate-set-text-property-at (col row face)
-  "Set the text property at COL and ROW with FACE."
+(defun coordinate-set-text-property-at (col row attributes)
+  "Set the text property at COL and ROW with ATTRIBUTES."
   (coordinate-position-point-at col row)
-  (put-text-property (point) (+ (point) 1) 'font-lock-face face))
+  (put-text-property (point) (+ (point) 1) 'font-lock-face attributes))
 
 (defun coordinate-set-color-at (col row bg-color fg-color)
   "Set the color at COL and ROW with BG-COLOR and FG-COLOR."
