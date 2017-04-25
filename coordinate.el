@@ -102,7 +102,7 @@ Coordinates use a starting index of 0."
   (coordinate-position-point-at col row)
   (remove-text-properties (point) (+ (point) 1) '(font-lock-face)))
 
-(defun coordinate-get-color-at (col row)
+(defun coordinate-get-text-property-at (col row)
   "Get the color at COL and ROW.
 Returns (:background BG-COLOR :foreground FG-COLOR)"
   (coordinate-position-point-at col row)
