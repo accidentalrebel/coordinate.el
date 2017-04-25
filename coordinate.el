@@ -48,8 +48,20 @@ ROWS specify the number of rows.
       (newline))
     ))
 
+(defun coordinate-current-col ()
+  "Return the current col at point position.
+Has an index of 0."
+  (current-column))
+
+(defun coordinate-current-row ()
+  "Return the current row at point position.
+Has an index of 0."
+  (- (line-number-at-pos) 1))
+
 (defun coordinate-position-point-at (col row)
   "Positions the point at COL and ROW coondinates.
+Be sure to initialize the draw area with coordinate-initialize-view-area first
+otherwise, this would not behave properly.
 Coordinates use a starting index of 0."
   (goto-char (point-min))
   (forward-line row)
@@ -98,33 +110,14 @@ Coordinates use a starting index of 0."
   (put-text-property (point) (+ (point) 1) 'font-lock-face attributes))
 
 (defun coordinate-remove-text-property-at (col row)
-  "Reset the color text property at COL and ROW."
+  "Remove the text property at COL and ROW."
   (coordinate-position-point-at col row)
   (remove-text-properties (point) (+ (point) 1) '(font-lock-face)))
 
 (defun coordinate-get-text-property-at (col row)
-  "Get the color at COL and ROW.
-Returns (:background BG-COLOR :foreground FG-COLOR)"
+  "Get the color at COL and ROW."
   (coordinate-position-point-at col row)
   (get-text-property (point) 'font-lock-face))
-
-(defun coordinate-get-bg-color-at (col row)
-  "Gets the background color at COL and ROW."
-  (plist-get (coordinate-get-color-at col row) ':background))
-
-(defun coordinate-get-fg-color-at (col row)
-  "Gets the foreground color at COL and ROW."
-  (plist-get (coordinate-get-color-at col row) ':foreground))
-
-(defun coordinate-current-col ()
-  "Return the current col at point position.
-Has an index of 0."
-  (current-column))
-
-(defun coordinate-current-row ()
-  "Return the current row at point position.
-Has an index of 0."
-  (- (line-number-at-pos) 1))
 
 (provide 'coordinate)
 ;;; coordinate.el ends here
