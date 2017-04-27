@@ -38,6 +38,7 @@ If this is not done col and row positions might return incorrectly.
 COLS specify the number of columns.
 ROWS specify the number of rows.
 &optional CHAR is the caharter to place."
+  (goto-char (point-min))
   (dotimes (row rows)
     (dotimes (_col cols)
       (insert (if char
