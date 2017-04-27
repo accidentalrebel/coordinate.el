@@ -85,7 +85,12 @@ Can accept a multiline string."
     (let ((lines (split-string str "[\n\r]+")))
       (dotimes (index (length lines))
 	(coordinate-position-point-at col (+ row index))
-	(replace-rectangle (point) (+ (point) (string-width (nth index lines))) (propertize (nth index lines) 'font-lock-face attributes))))))
+	(let* ((current-line (nth index lines))
+	       (line-char-count (string-width current-line)))
+	  (when (> line-char-count (- (point-at-eol) (point)))
+	    (user-error "The line \"%s\" is wider than the view area" current-line))
+	  (replace-rectangle (point) (+ (point) line-char-count) (propertize current-line 'font-lock-face attributes)))
+	))))
 
 (defun coordinate-place-char-at-area (col row width height char &optional attributes)
   "Place a character at the given COL and ROW.
