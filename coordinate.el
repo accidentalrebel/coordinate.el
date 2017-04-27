@@ -24,7 +24,7 @@
 
 ;; Provides convenience functions for editing the buffer through col and row coordinates.
 ;;
-;; This package is designed with games in mind but can be used for anything that requires
+;; This library is designed with games in mind but can be used for anything that requires
 ;; editing of the buffer using col and row coordinates.
 
 ;;; Code:
