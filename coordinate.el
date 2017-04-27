@@ -60,7 +60,7 @@ Has an index of 0."
 
 (defun coordinate-position-point-at (col row)
   "Positions the point at COL and ROW coondinates.
-Be sure to initialize the draw area with coordinate-initialize-view-area first
+Be sure to initialize the draw area with ‘coordinate-initialize-view-area’ first
 otherwise, this would not behave properly.
 Coordinates use a starting index of 0."
   (goto-char (point-min))
