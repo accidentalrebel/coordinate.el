@@ -75,7 +75,8 @@ CHAR is the character to place.
 Coordinates use a starting index of 0."
   (save-excursion
     (coordinate-position-point-at col row)
-    (replace-rectangle (point) (+ (point) 1) (propertize char 'font-lock-face attributes))))
+    (delete-char 1)
+    (insert (propertize char 'font-lock-face attributes))))
 
 (defun coordinate-place-string-at-area (col row str &optional attributes)
   "Places at COL and ROW a given STR.
