@@ -30,7 +30,7 @@
 ;;; Code:
 
 ;;;###autoload
-(defun coordinate-initialize-view-area (cols rows &optional char)
+(defun coordinate-initialize-view-area (cols rows &optional char attributes)
   "Initialize an area for drawing.
 This is the first thing that should be called as initializes the draw area.
 If this is not done col and row positions might return incorrectly.
@@ -42,7 +42,7 @@ ROWS specify the number of rows.
   (dotimes (row rows)
     (dotimes (_col cols)
       (insert (if char
-		  char
+		  (propertize char 'font-lock-face attributes)
 		" "))
       )
     (when (< row (- rows 1))
