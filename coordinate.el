@@ -105,6 +105,24 @@ CHAR is the character to place.
       )
     ))
 
+(defun coordinate-place-char-as-border (col row width height char &optional attributes)
+  "Place a character at the given COL and ROW as a border.
+WIDTH is the number of columns to repeat the character.
+HEIGHT is the number of rows to repeat the character.
+CHAR is the character to place.
+&optional ATTRIBUTES is the face attribute to use for the character."
+  (dotimes (y height)
+    (dotimes (x width)
+      (message "%d" y)
+      (when
+	  (or (= x 0)
+	      (= x (- width 1))
+	      (= y 0)
+	      (= y (- height 1)))
+	(coordinate-place-char-at (+ col x) (+ row y) char attributes))
+      )
+    ))
+
 (defun coordinate-get-char-at (col row)
   "Gets the char at COL and ROW coordinates.
 Coordinates use a starting index of 0."
