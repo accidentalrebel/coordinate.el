@@ -93,6 +93,21 @@ Can accept a multiline string."
 	  (replace-rectangle (point) (+ (point) line-char-count) (propertize current-line 'font-lock-face attributes)))
 	))))
 
+(defun coordinate-get-string-at-area (col row width height)
+  "Get the string at COL and ROW with WIDTH and HEIGHT."
+  (let ((str (make-string 0 ?x)))
+    (save-excursion
+      (dotimes (j height)
+	(dotimes (i width)
+	  (let ((char-at-pos (coordinate-get-char-at (+ col i) (+ row j))))
+	    (when (not (string= char-at-pos "\n"))
+	      (setq str (concat str char-at-pos))))
+	  )
+	(when (< j (- height 1))
+	  (setq str (concat str "\n")))
+	)
+      str)))
+
 (defun coordinate-place-char-at-area (col row width height char &optional attributes)
   "Place a character at the given COL and ROW.
 WIDTH is the number of columns to repeat the character.
